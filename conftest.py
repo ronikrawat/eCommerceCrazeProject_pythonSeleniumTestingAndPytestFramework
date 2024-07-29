@@ -2,8 +2,7 @@ import pytest
 
 
 from time import sleep
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.edge.webdriver import WebDriver as edge
+from selenium import webdriver
 
 def pytest_addoption(parser):
     parser.addoption("--browser_name")
@@ -27,11 +26,15 @@ def browser(request,env_config):
     browser_=request.config.getoption("--browser_name")
     if browser_.lower()=="chrome":
             print("openning the chrome browser==========")
-            driver=WebDriver()
+            driver= webdriver.Chrome()
+    
+    elif browser_.lower()=="firefox":
+         print("openning the edge browser===========")
+         driver= webdriver.Firefox()
 
     elif browser_.lower()=="edge":
          print("openning the edge browser===========")
-         driver=edge()
+         driver= webdriver.Edge()
     driver.delete_all_cookies()
     driver.maximize_window()
     driver.get(env_config.url)
